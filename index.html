@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amina Malik - Couple Therapist & Life Coach</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            scroll-behavior: smooth;
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .animate-fade-up {
+            animation: fadeUp 1s ease-out forwards;
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .navbar.show {
+            transform: translateY(0);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #f87171;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #374151;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #f87171;
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 2px;
+            background: #f87171;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #fca5a5, #f87171, #000);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-content {
+            text-align: center;
+            color: white;
+            z-index: 10;
+            position: relative;
+            padding: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1s ease-out 0.5s forwards;
+        }
+
+        .hero-image {
+            margin-bottom: 2rem;
+        }
+
+        .hero-image-container {
+            width: 192px;
+            height: 192px;
+            margin: 0 auto;
+            border-radius: 50%;
+            background: linear-gradient(to right, #fff, #f3f4f6, #fff);
+            padding: 4px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .hero-image img:hover {
+            transform: scale(1.05);
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .hero-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 128px;
+            height: 4px;
+            background: linear-gradient(to right, #fff, #fca5a5, #fff);
+            border-radius: 2px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            background: white;
+            color: #000;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-button:hover {
+            background: #f3f4f6;
+            transform: scale(1.05);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 5rem 2rem;
+            opacity: 1;
+            transform: none; 
+        }
+
+        .section.visible {
+            animation: fadeUp 1s ease-out forwards;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 4rem;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 96px;
+            height: 4px;
+            background: linear-gradient(to right, #fca5a5, #f87171, #fca5a5);
+            border-radius: 2px;
+        }
+
+        /* Grid Layouts */
+        .grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .grid-2 {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid #f3f4f6;
+        }
+
+        .card:hover {
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #f87171;
+            margin-bottom: 1rem;
+        }
+
+        .card-text {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        /* Services Section */
+        .services {
+            background: #f9fafb;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid #e5e7eb;
+            cursor: pointer;
+        }
+
+        .service-card:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .service-icon {
+            width: 48px;
+            height: 48px;
+            color: #f87171;
+            margin: 0 auto 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover .service-icon {
+            transform: scale(1.1);
+        }
+
+        .service-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 1rem;
+        }
+
+        .service-description {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        /* Testimonials */
+        .testimonial-card {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .quote-icon {
+            width: 32px;
+            height: 32px;
+            color: #f87171;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            color: #374151;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .testimonial-year {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        /* CTA Strip */
+        .cta-strip {
+            background: linear-gradient(to right, #fca5a5, #f87171, #ef4444);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .cta-strip h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .cta-strip p {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-strip .cta-button {
+            background: white;
+            color: #ef4444;
+        }
+
+        .cta-strip .cta-button:hover {
+            background: #f3f4f6;
+        }
+
+        /* Social Icons */
+        .social-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            color: inherit;
+            transition: all 0.3s ease;
+            padding: 0.5rem;
+            border-radius: 8px;
+        }
+
+        .social-link:focus {
+            outline: 2px solid #f87171;
+            outline-offset: 2px;
+        }
+
+        .social-icon {
+            width: 32px;
+            height: 32px;
+        }
+
+        .social-youtube { color: #dc2626; }
+        .social-facebook { color: #2563eb; }
+        .social-instagram { color: #ec4899; }
+        .social-tiktok { color: #000; }
+        .social-email { color: #6b7280; }
+        .social-whatsapp { color: #16a34a; }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(to right, #fca5a5, #f87171, #000);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer p {
+            color: white;
+            font-size: 1.125rem;
+        }
+
+        .footer a {
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+            color: #f3f4f6;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            background: #f87171;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .back-to-top:hover {
+            background: #ef4444;
+            transform: scale(1.1);
+        }
+
+        .back-to-top:focus {
+            outline: 2px solid #f87171;
+            outline-offset: 2px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .section {
+                padding: 3rem 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .grid-2,
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-image-container {
+                width: 150px;
+                height: 150px;
+            }
+
+            .hero-title {
+                font-size: 1.75rem;
+            }
+
+            .cta-strip h3 {
+                font-size: 1.5rem;
+            }
+
+            .cta-strip p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">Amina Malik</div>
+            <ul class="nav-links">
+                <li><a href="#hero" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <div class="hero-image">
+                <div class="hero-image-container">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/hero-image.png-8SPzTD8zV265bCDEZDaqR5zm0TNraF.jpeg" alt="Amina Malik - Professional Photo">
+                </div>
+            </div>
+            <h1 class="hero-title">Amina Malik</h1>
+            <p class="hero-subtitle">Couple Therapist | Life Coach | Relationship Coach | Podcaster</p>
+            <a href="#contact" class="cta-button">Book a 1:1 Session</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">About Amina</h2>
+            <div class="grid grid-2">
+                <div class="card">
+                    <h3 class="card-title">Professional Summary</h3>
+                    <p class="card-text">
+                        Amina Malik is a dedicated couple therapist and life coach with extensive experience in relationship counseling, personal development, and emotional wellness. She specializes in helping individuals and couples not only strengthen their relationships with others, but also cultivate a healthier, more fulfilling relationship with themselves. With a compassionate and holistic approach, Amina supports clients dealing with challenges such as depression, anxiety, and emotional stress, guiding them toward clarity, balance, and resilience. By integrating traditional wisdom, modern psychology, and spiritual insight, she empowers her clients to build stronger, healthier, and more balanced lives.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Approach & Background</h3>
+                    <p class="card-text">
+                        With a holistic approach to therapy, Amina combines traditional wisdom, modern psychological understanding, and spiritual insight with evidence-based techniques. She believes that true healing comes from addressing the mind, heart, and spirit together. With a strong background in relationship coaching and years of practical experience in understanding human psychology, Amina creates safe and compassionate spaces where individuals and couples can find growth, clarity, and emotional balance.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Professional Experience & Focus</h3>
+                    <p class="card-text">
+                        <b>Relationship with Others:</b> Helping couples and families improve communication, rebuild trust, and strengthen emotional bonds.<br>
+
+<b>Relationship with Self:</b> Guiding individuals toward greater self-awareness, confidence, and inner peace.<br>
+
+<b>Emotional Wellness:</b> Supporting clients in managing depression, anxiety, and stress through holistic and compassionate strategies.<br>
+
+<b>Premarital Counseling:</b> Preparing individuals and couples for marriage by fostering emotional maturity, spiritual alignment, and realistic expectations.<br>
+
+<b>Parenting Support:</b> Helping parents navigate challenges, strengthen their bond with children, and create nurturing family environments.<br>
+
+<b>Personal Growth:</b> Empowering clients to discover purpose, cultivate resilience, and live more balanced, fulfilling lives.<br>
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Premarital Counselling</h3>
+                    <p class="card-text">
+                        Marriage is more than a celebration — it’s a lifelong journey that requires understanding, patience, and preparation. My premarital counseling helps individuals and couples build emotional readiness, strengthen communication, and align values before stepping into marriage. Together, we’ll lay the foundations for a healthy, balanced, and fulfilling partnership.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section services">
+        <div class="container">
+            <h2 class="section-title">Services</h2>
+            <div class="grid grid-2" style="max-width: 800px; margin: 0 auto;">
+                <div class="service-card">
+                    <svg class="service-icon" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                    <h3 class="service-title">One-on-One Coaching for Women</h3>
+                    <p class="service-description">Personalized sessions focused on emotional wellness and growth.</p>
+                </div>
+                <div class="service-card">
+                    <svg class="service-icon" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                    <h3 class="service-title">Relationship Coaching for Couples</h3>
+                    <p class="service-description">Practical tools to rebuild trust, intimacy, and communication.</p>
+                </div>
+                <div class="service-card">
+                    <svg class="service-icon" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                    </svg>
+                    <h3 class="service-title">Parenting & Family Dynamics Guidance</h3>
+                    <p class="service-description">Support for parents navigating joint/extended family challenges.</p>
+                </div>
+                <div class="service-card">
+                    <svg class="service-icon" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                    </svg>
+                    <h3 class="service-title">Confidence & Self-Esteem Building After Breakup/Divorce</h3>
+                    <p class="service-description">Practical steps to strengthen self-worth and resilience.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <!--<section id="testimonials" class="section">-->
+    <!--    <div class="container">-->
+    <!--        <h2 class="section-title">What Clients Say</h2>-->
+    <!--        <div class="grid grid-3">-->
+    <!--            <div class="testimonial-card">-->
+    <!--                <svg class="quote-icon" fill="currentColor" viewBox="0 0 24 24">-->
+    <!--                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>-->
+    <!--                </svg>-->
+    <!--                <p class="testimonial-text">"Amina's sessions helped us rebuild trust and communicate better than ever. Her approach is both professional and deeply caring."</p>-->
+    <!--                <div>-->
+    <!--                    <p class="testimonial-author">– Sarah & Ahmed</p>-->
+    <!--                    <p class="testimonial-year">2024</p>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            <div class="testimonial-card">-->
+    <!--                <svg class="quote-icon" fill="currentColor" viewBox="0 0 24 24">-->
+    <!--                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>-->
+    <!--                </svg>-->
+    <!--                <p class="testimonial-text">"The confidence building sessions transformed my self-worth. I finally feel empowered to pursue my dreams."</p>-->
+    <!--                <div>-->
+    <!--                    <p class="testimonial-author">– Fatima K.</p>-->
+    <!--                    <p class="testimonial-year">2024</p>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            <div class="testimonial-card">-->
+    <!--                <svg class="quote-icon" fill="currentColor" viewBox="0 0 24 24">-->
+    <!--                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>-->
+    <!--                </svg>-->
+    <!--                <p class="testimonial-text">"Her premarital counseling gave us the tools we needed for a strong foundation. Highly recommend!"</p>-->
+    <!--                <div>-->
+    <!--                    <p class="testimonial-author">– Zara & Hassan</p>-->
+    <!--                    <p class="testimonial-year">2024</p>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <!--</section>-->
+
+    <!-- CTA Strip -->
+    <section class="cta-strip">
+        <div class="container">
+            <h3>Ready to Transform Your Relationships?</h3>
+            <p>Book your personalized session today and start your journey to better communication and stronger connections.</p>
+            <a href="#contact" class="cta-button">Book Your Session Today</a>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title">Connect With Amina</h2>
+            <div class="social-links">
+                <a href="https://www.youtube.com/@AminaBaberPodcast" target="_blank" rel="noopener noreferrer" class="social-link social-youtube" aria-label="Connect with Amina on YouTube">
+                    <svg class="social-icon" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                </a>
+                <a href="https://web.facebook.com/Officialaminamalik" target="_blank" rel="noopener noreferrer" class="social-link social-facebook" aria-label="Connect with Amina on Facebook">
+                    <svg class="social-icon" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                </a>
+                <a href="https://www.instagram.com/aminamalik876/" target="_blank" rel="noopener noreferrer" class="social-link social-instagram" aria-label="Connect with Amina on Instagram">
+                    <svg class="social-icon" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.012-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.69.073 4.948.073 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                </a>
+                <a href="https://www.tiktok.com/@aminamalik988" target="_blank" rel="noopener noreferrer" class="social-link social-tiktok" aria-label="Connect with Amina on TikTok">
+                    <svg class="social-icon" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+                    </svg>
+                </a>
+                <a href="mailto:aimmalik613@gmail.com" class="social-link social-email" aria-label="Email Amina">
+                    <svg class="social-icon" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                    </svg>
+                </a>
+                <a href="https://wa.me/923214969620" target="_blank" rel="noopener noreferrer" class="social-link social-whatsapp" aria-label="Connect with Amina on WhatsApp">
+                    <svg class="social-icon" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.197.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 All rights reserved by Amina Malik | Made by <a href="https://www.linkedin.com/in/hassaan14/" target="_blank" rel="noopener noreferrer">Hassaan Abdullah</a></p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+        </svg>
+    </button>
+
+    <script>
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.3,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Update active nav link
+                    const id = entry.target.getAttribute('id');
+                    if (id) {
+                        document.querySelectorAll('.nav-link').forEach(link => {
+                            link.classList.remove('active');
+                        });
+                        const activeLink = document.querySelector(`a[href="#${id}"]`);
+                        if (activeLink) {
+                            activeLink.classList.add('active');
+                        }
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Navbar show/hide on scroll
+        let lastScrollY = window.scrollY;
+        const navbar = document.getElementById('navbar');
+        const backToTop = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+            const heroHeight = window.innerHeight;
+
+            // Show/hide navbar
+            if (currentScrollY > heroHeight * 0.8) {
+                navbar.classList.add('show');
+            } else {
+                navbar.classList.remove('show');
+            }
+
+            // Show/hide back to top button
+            if (currentScrollY > heroHeight) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+
+            lastScrollY = currentScrollY;
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Back to top functionality
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Initialize animations on load
+        window.addEventListener('load', () => {
+            // Trigger initial intersection observer check
+            document.querySelectorAll('.section').forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    section.classList.add('visible');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
